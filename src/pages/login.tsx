@@ -11,19 +11,14 @@ export default function LoginForm() {
     try {
       // Use the signIn function to authenticate the user
       const result = await signIn('credentials', {
-        redirect: false, // Do not redirect, so you can handle the result
+        redirect: false, 
         email,
         password,
       });
-
-      // Check the result
       if (result?.error) {
         console.error('Authentication failed:', result.error);
       } else {
-        // Authentication successful
-       
         console.log('Authentication successful:', data);
-        // You can redirect the user or perform other actions on successful authentication
       }
     } catch (error) {
       console.error('An error occurred during authentication:', error);
