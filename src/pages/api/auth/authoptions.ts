@@ -30,7 +30,7 @@ export const authoptions: NextAuthOptions = {
       async authorize(credentials) {
         const session: any = {
           email: credentials?.email,
-          // You might want to handle the case where credentials is undefined
+          
         };
         return session;
       },
