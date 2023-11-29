@@ -6,9 +6,14 @@ import { useRouter } from 'next/router';
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { data } = useSession();
+
   const router=useRouter()
-  console.log(data)
+  const { data: session } = useSession();
+
+  if (session) {
+    // User is authenticated, redirect to the home page
+    router.push('/Home');
+  }
   const handleLogin = async () => {
     try {
       // Use the signIn function to authenticate the user
@@ -20,13 +25,21 @@ export default function LoginForm() {
       if (result?.error) {
         console.error('Authentication failed:', result.error);
       } else {
+        
         router.push("/Home")
-        console.log('Authentication successful:', data);
+        console.log('Authentication successful:', session);
       }
     } catch (error) {
       console.error('An error occurred during authentication:', error);
     }
   };
+
+    async function handleGithubLogin() {
+        await signIn('github');
+  console.log('After GitHub login, before router.push');
+  router.push("/Home");
+  console.log('After router.push');
+    }
 
   return (
     <div className='h-screen w-full bg-gray-100 p-5 flex justify-center items-center'>
@@ -62,6 +75,14 @@ export default function LoginForm() {
         className="w-full px-4 py-2 mt-4 text-white bg-green-500 rounded-md focus:outline-none hover:bg-green-600 disabled:bg-gray-400"
       >
       Submit
+      </button>
+      <button
+        type="button"
+        onClick={handleGithubLogin}
+      
+        className="w-full px-4 py-2 mt-4 text-white bg-green-500 rounded-md focus:outline-none hover:bg-green-600 disabled:bg-gray-400"
+      >
+    Login with Github
       </button>
     </form>
     </div>
