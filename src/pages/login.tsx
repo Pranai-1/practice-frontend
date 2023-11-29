@@ -1,11 +1,13 @@
 // Example login form component
 import { useState } from 'react';
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from 'next/router';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { data } = useSession();
+  const router=useRouter()
   console.log(data)
   const handleLogin = async () => {
     try {
@@ -18,6 +20,7 @@ export default function LoginForm() {
       if (result?.error) {
         console.error('Authentication failed:', result.error);
       } else {
+        router.push("/Home")
         console.log('Authentication successful:', data);
       }
     } catch (error) {
