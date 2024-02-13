@@ -6,10 +6,11 @@ export default function Accordian(){
     const[section3,setSection3]=useState<boolean>(false)
     const[section4,setSection4]=useState<boolean>(false)
     const[section5,setSection5]=useState<boolean>(false)
+    const[isVisible,setIsVisible]=useState<string>("")//optimied collapsable
 
-    function openCollapsable(type:Number){
-      console.log(typeof type)
-      switch(type){
+    function openCollapsable(num:Number){
+      console.log(typeof num)
+      switch(num){
         case 3:{
                   if(section3){
                     setSection3(false)
@@ -43,9 +44,18 @@ export default function Accordian(){
           }
       }
     }
+
+    function optimizedCollapsable(str:string){
+       setIsVisible((prev:string)=>{
+        if(prev==str){
+          return ""
+        }
+        return str
+       })
+    }
     return (
      
-     <div className="h-[707px] w-full bg-black p-2">
+     <div className="h-full w-full bg-black p-2">
      <div className="h-max w-[600px] font-medium text-black bg-red-500  p-2 my-2 mx-9" >
       <div className="flex justify-between">
       <span className="p-2 m-2">Click here</span>
@@ -86,6 +96,31 @@ export default function Accordian(){
       </div>
       {section5 && (
         <p>collapsable 3</p>
+      )}
+     </div>
+
+     <p className="font-bold text-2xl text-green-600 mt-10">Optimised Collapsable Accordian</p>
+     <div className="h-max w-[600px] font-medium text-black bg-green-500  p-2 m-10" >
+      <div className="flex justify-between">
+      <span className="p-2 m-2">Click here collapsable1</span>
+      <span className="p-2  ml-2 cursor-pointer text-2xl" onClick={()=>optimizedCollapsable("1")}> {isVisible=="1" ? "-" : "+"}</span>
+      </div>
+      {isVisible=="1" && (
+        <p>optimizedCollapsable 1</p>
+      )}
+      <div className="flex justify-between">
+      <span className="p-2 m-2">Click here collapsable2</span>
+      <span className="p-2  ml-2 cursor-pointer text-2xl" onClick={()=>optimizedCollapsable("2")}> {isVisible=="2" ? "-" : "+"}</span>
+      </div>
+      {isVisible=="2" && (
+        <p>optimizedCollapsable 2</p>
+      )}
+      <div className="flex justify-between">
+      <span className="p-2 m-2">Click here collapsable3</span>
+      <span className="p-2  ml-2 cursor-pointer text-2xl" onClick={()=>optimizedCollapsable("3")}> {isVisible=="3" ? "-" : "+"}</span>
+      </div>
+      {isVisible=="3" && (
+        <p>optimizedCollapsable 3</p>
       )}
      </div>
      </div>
